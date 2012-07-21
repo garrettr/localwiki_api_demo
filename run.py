@@ -3,9 +3,13 @@ app = Flask(__name__)
 
 import os
 
+@app.route('/search/<query>')
+def search():
+    pass
+
 @app.route('/')
 def index():
-    pass
+    return render_template('index.html')
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000
