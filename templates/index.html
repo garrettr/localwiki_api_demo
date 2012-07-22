@@ -1,4 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h1 class="center">Search all the images on Oakland Wiki!</h1>
+<form>
+  <input type="text" name="search" placeholder="What do you want to see?" class="search-query search">
+  <input type="submit" value="Search" id="search-submit" class="btn">
+</form>
+
+<img class="center loading" src="{{ url_for('static', filename='img/loading.gif') }}">
+<div id=results></div>
+
 {% endblock %}

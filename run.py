@@ -3,9 +3,29 @@ app = Flask(__name__)
 
 import os
 
-@app.route('/search/<query>')
+import slumber
+
+@app.route('/search')
 def search():
-    pass
+    # TODO: make this a field for different localwikis
+    SITE = "http://detroitwiki.org/"
+    query = request.args['query']
+
+    api = slumber.API(SITE + "api/")
+
+    results = api.file.get(slug__icontains=query)
+    # TODO: figure out pagination
+    EXTS = ( '.jpg', '.png', '.gif' )
+    images = []
+    for f in results['objects']:
+        # TODO: so jank
+        if f['file'][-4:] in EXTS:
+            images.append({
+                'url': SITE + f['file'],
+                'title': f['slug']
+                })
+
+    return render_template('gallery.html', query=query, images=images)
 
 @app.route('/')
 def index():

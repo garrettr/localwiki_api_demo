@@ -1,0 +1,11 @@
+<p>You searched for: {{ query }}</p>
+
+<div class="center" id="gallery">
+{% for image in images %}
+  <img src={{ image.url }} data-title="{{ image.title }}">
+{% endfor %}
+</div>
+
+<script>
+Galleria.loadTheme("{{ url_for('static', filename='galleria/themes/classic/galleria.classic.min.js') }}");
+</script>
