@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 app = Flask(__name__)
 
 import os
-
+import mimetypes
 import slumber
 
 @app.route('/search')
@@ -15,11 +15,10 @@ def search():
 
     results = api.file.get(slug__icontains=query)
     # TODO: figure out pagination
-    EXTS = ( '.jpg', '.png', '.gif' )
     images = []
     for f in results['objects']:
-        # TODO: so jank
-        if f['file'][-4:] in EXTS:
+        is_image = mimetypes.guess_type(f['file'])[0].startswith('image/')
+        if is_image:
             images.append({
                 'url': SITE + f['file'],
                 'title': f['slug']
